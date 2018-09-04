@@ -1,0 +1,9 @@
+#!/bin/bash
+
+echo "$(date) - Starting knife ec backup"
+/opt/opscode/embedded/bin/knife ec backup <%= @backup_location %> --with-user-sql --with-key-sql --concurrency 20 -c /etc/opscode/pivotal.rb
+echo "$(date) - Completed knife ec backup"
+
+echo "$(date) - Syncing data to s3"
+aws s3 sync <%= @backup_location %> s3://<%= ::File.join(@backup_s3bucket, @backup_location) %>
+echo "$(date) - Syncing completed"
