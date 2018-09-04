@@ -56,6 +56,6 @@ cron_d 'backup chef-server' do
   minute '0'
   hour '*'
   path '$PATH:/usr/local/bin:/opt/opscode/embedded/bin'
-  command backup_script
+  command "#{backup_script} > /var/log/chef-server-backup.log"
   action :create
 end
