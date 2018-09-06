@@ -52,11 +52,11 @@ template backup_script do
   action :create
 end
 
-# new line at the end is important for it to be read as a valid cron job
 cron_d 'backup-chef-server' do
   minute '15'
   hour '11'
   path '$PATH:/bin:/sbin:/usr/local/bin:/usr/local/sbin:/opt/opscode/embedded/bin'
+  # new line at the end is important for it to be read as a valid cron job
   command "#{backup_script} > /var/log/chef-server-backup.log\n"
   action :create
 end
